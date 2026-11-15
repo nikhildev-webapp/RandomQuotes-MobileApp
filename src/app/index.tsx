@@ -66,7 +66,7 @@ export default function Index() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+  
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 20,
@@ -74,9 +74,10 @@ const styles = StyleSheet.create({
   textHeading: {
     fontSize: 22,
     fontWeight: "bold",
+    marginTop: 10,
   },
   btnWrapper: {
-    marginTop: 16,
+    marginTop: 5,
     borderWidth: 1,
     paddingVertical: 10,
     paddingHorizontal: 18,
