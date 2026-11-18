@@ -1,57 +1,125 @@
-# Welcome to your Expo app 👋
+# Random Quotes Mobile App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A cross-platform Expo and React Native app that fetches a random quote from an external API. The app runs on Android, iOS, and web through a single Expo Router entry point.
 
-## Get started
+## App review
 
-1. Install dependencies
+> **Pre-release preview:** The app is not live in an app store yet. This review shows the current Android UI running during development.
 
-   ```bash
-   npm install
-   ```
+![Random Quotes app review showing a generated quote](/Screenshot_1795003609.png)
 
-2. Start the app
+## Features
 
-   ```bash
-   npx expo start
-   ```
+- Fetches a random quote and author from DummyJSON
+- Handles loading, success, and error states
+- Prevents repeated requests while a request is in progress
+- Uses the Expo Router stack navigator
+- Includes Android, iOS, and web app configuration
+- Uses React Native `StyleSheet` for platform-native styling
 
-In the output, you'll find options to open the app in a
+## Tech stack
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- Expo SDK 58
+- React 19.3
+- React Native 0.88.1
+- Expo Router 58
+- TypeScript 6
+- ESLint with Expo configuration
 
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Prerequisites
 
-## Get a fresh project
+Install the following before starting the project:
 
-When you're ready, run:
+- Node.js with npm
+- Android Studio and an Android emulator, or a physical Android/iOS device
+- Expo Go, for a supported development-build workflow
+- Xcode and CocoaPods on macOS for iOS development
+
+Use npm in this repository because `package-lock.json` is checked in.
+
+## Installation
 
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+## Running the app
 
-### Other setup steps
+Start the Expo development server:
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+```bash
+npm start
+```
 
-## Learn more
+You can open the app using an Android emulator, iOS simulator, Expo Go, or a web browser:
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+npm run android
+npm run ios
+npm run web
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Project structure
 
-## Join the community
+```text
+src/
+  app/
+    _layout.tsx  Expo Router root stack layout
+    index.tsx    Random quote screen
+assets/
+  images/        App icons and splash assets
+  expo.icon/     iOS icon source
+app.json         Expo application configuration
+eslint.config.js ESLint configuration
+tsconfig.json    Strict TypeScript configuration
+package.json     Dependencies and npm scripts
+```
 
-Join our community of developers creating universal apps.
+The main screen is in `src/app/index.tsx`. Expo Router treats each file in `src/app` as a route, and `_layout.tsx` defines the root stack navigator.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
-![Review](Screenshot_1795003609.png) ![Review](Screenshot_1795003603.png)
+## How it works
+
+When the user presses **Generate Quote**, the app:
+
+1. Sets loading and error state.
+2. Sends a request to `https://dummyjson.com/quotes/random`.
+3. Parses `quote` and `author` from the JSON response.
+4. Displays the quote and author, or an error message if the request fails.
+
+The request button is disabled during loading to prevent duplicate requests.
+
+## Configuration
+
+Application metadata and assets are configured in `app.json`:
+
+- App name: `DailyQuotes-MobileApp`
+- Expo slug: `DailyQuotes-MobileApp`
+- Supported orientation: portrait
+- System interface style: automatic
+- Custom URL scheme: `dailyquotesmobileapp`
+- Expo Router and React Compiler enabled
+- Splash screen and platform icon assets configured
+
+Environment variables are not currently required.
+
+## Available scripts
+
+| Command | Purpose |
+| --- | --- |
+| `npm start` | Start the Expo development server |
+| `npm run android` | Start Expo and open Android |
+| `npm run ios` | Start Expo and open iOS |
+| `npm run web` | Start the Expo web server |
+| `npm run lint` | Run Expo ESLint |
+| `npm run reset-project` | Move starter example files and create a blank app |
+
+## Code quality
+
+Run lint and TypeScript checks before submitting changes:
+
+```bash
+npm run lint
+npx tsc --noEmit
+```
+
+The repository currently contains a generated `example/` directory. It is not part of the active app route in `src/app`; if type-checking from the repository root reports unresolved imports from `example/`, exclude that directory or remove it from the root workspace before adding it as a supported example project.
